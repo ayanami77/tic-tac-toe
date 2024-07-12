@@ -2,6 +2,7 @@ package board
 
 import (
 	"fmt"
+	"slices"
 	"tic-tac-toe/cmd/ui"
 )
 
@@ -126,4 +127,31 @@ func (b *Board) Render(currentPlayer string) {
 	b.renderHelper(b.Values)
 
 	ui.NotifySituation(currentPlayer)
+}
+
+func (b *Board) CheckHasWinner() bool {
+	patterns := [][]int{
+		{0, 1, 2},
+		{3, 4, 5},
+		{6, 7, 8},
+		{0, 3, 6},
+		{1, 4, 7},
+		{2, 5, 8},
+		{0, 4, 8},
+		{2, 4, 6},
+	}
+
+	values := slices.Concat(b.Values...)
+
+	for _, pattern := range patterns {
+		if values[pattern[0]] != "-" &&
+			values[pattern[1]] != "-" &&
+			values[pattern[2]] != "-" &&
+			values[pattern[0]] == values[pattern[1]] &&
+			values[pattern[1]] == values[pattern[2]] {
+			return true
+		}
+	}
+
+	return false
 }

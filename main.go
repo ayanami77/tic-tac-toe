@@ -3,6 +3,7 @@ package main
 import (
 	board "tic-tac-toe/cmd/board"
 	player "tic-tac-toe/cmd/player"
+	"tic-tac-toe/cmd/ui"
 
 	"github.com/eiannone/keyboard"
 )
@@ -51,10 +52,15 @@ func main() {
 
 		if event.Key == keyboard.KeySpace && !b.CheckIsFlipped() {
 			b.Flip(b.CurrentPattern)
-			pc.Switch()
 
 			b.Render(pc.CurrentPlayer)
 
+			if b.CheckHasWinner() {
+				ui.GreenPrintf("\n\n\nWinner: %s", pc.CurrentPlayer)
+				break
+			}
+
+			pc.Switch()
 			b.SetPattern(pc.Players[pc.CurrentPlayer].Pattern)
 		}
 
