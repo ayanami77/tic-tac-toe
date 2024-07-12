@@ -1,8 +1,8 @@
 package main
 
 import (
-	board "tic-tac-toe/cmd/board"
-	player "tic-tac-toe/cmd/player"
+	"tic-tac-toe/cmd/board"
+	"tic-tac-toe/cmd/player"
 	"tic-tac-toe/cmd/ui"
 
 	"github.com/eiannone/keyboard"
@@ -14,7 +14,8 @@ func main() {
 
 	b := board.Board{}
 	b.Init()
-	b.RenderPreValues(pc.CurrentPlayer)
+	b.RenderPreValues()
+	ui.NotifySituation(pc.CurrentPlayer)
 
 	keysEvents, err := keyboard.GetKeys(10)
 	if err != nil {
@@ -32,22 +33,22 @@ func main() {
 
 		if event.Key == keyboard.KeyArrowRight {
 			b.Manipulate("right")
-			b.RenderPreValues(pc.CurrentPlayer)
+			b.RenderPreValues()
 		}
 
 		if event.Key == keyboard.KeyArrowLeft {
 			b.Manipulate("left")
-			b.RenderPreValues(pc.CurrentPlayer)
+			b.RenderPreValues()
 		}
 
 		if event.Key == keyboard.KeyArrowUp {
 			b.Manipulate("up")
-			b.RenderPreValues(pc.CurrentPlayer)
+			b.RenderPreValues()
 		}
 
 		if event.Key == keyboard.KeyArrowDown {
 			b.Manipulate("down")
-			b.RenderPreValues(pc.CurrentPlayer)
+			b.RenderPreValues()
 		}
 
 		if event.Key == keyboard.KeySpace && !b.CheckIsFlipped() {
@@ -56,13 +57,15 @@ func main() {
 			b.Render(pc.CurrentPlayer)
 
 			if b.CheckHasWinner() {
-				ui.GreenPrintf("\n\n\nWinner: %s", pc.CurrentPlayer)
+				ui.GreenPrintf("\nWinner: %s\n", pc.CurrentPlayer)
 				break
 			}
 
 			pc.Switch()
 			b.SetPattern(pc.Players[pc.CurrentPlayer].Pattern)
 		}
+
+		ui.NotifySituation(pc.CurrentPlayer)
 
 		if event.Key == keyboard.KeyCtrlC || event.Key == keyboard.KeyEsc {
 			break

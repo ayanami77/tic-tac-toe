@@ -60,33 +60,30 @@ func (b *Board) SetPattern(pattern string) {
 }
 
 func (b *Board) setPreValues() {
-	tmp := b.makePreValues(b.Values)
+	preValues := b.makePreValues(b.Values)
 
-	if tmp[b.CurrentY][b.CurrentX] == "-" {
-		tmp[b.CurrentY][b.CurrentX] = "@"
+	if preValues[b.CurrentY][b.CurrentX] == "-" {
+		preValues[b.CurrentY][b.CurrentX] = "@"
 	}
 
-	b.PreValues = tmp
+	b.PreValues = preValues
 }
 
 func (b *Board) makePreValues(values [][]string) [][]string {
-	tmp := make([][]string, len(values))
+	preValues := make([][]string, len(values))
+
 	for i := range values {
-		tmp[i] = make([]string, len(values[i]))
-		copy(tmp[i], values[i])
+		preValues[i] = make([]string, len(values[i]))
+		copy(preValues[i], values[i])
 	}
 
-	return tmp
+	return preValues
 }
 
-func (b *Board) RenderPreValues(currentPlayer string) {
-	// clear terminal
-	fmt.Print("\033[H\033[2J")
-	fmt.Println()
+func (b *Board) RenderPreValues() {
+	ui.Clear()
 
 	b.renderHelper(b.PreValues)
-
-	ui.NotifySituation(currentPlayer)
 }
 
 func (b *Board) renderHelper(values [][]string) {
@@ -120,13 +117,9 @@ func (b *Board) Flip(pattern string) {
 }
 
 func (b *Board) Render(currentPlayer string) {
-	// clear terminal
-	fmt.Print("\033[H\033[2J")
-	fmt.Println()
+	ui.Clear()
 
 	b.renderHelper(b.Values)
-
-	ui.NotifySituation(currentPlayer)
 }
 
 func (b *Board) CheckHasWinner() bool {
