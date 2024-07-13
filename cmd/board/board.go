@@ -148,3 +148,9 @@ func (b *Board) CheckHasWinner() bool {
 
 	return false
 }
+
+func (b *Board) CheckIfDraw() bool {
+	values := slices.Concat(b.Values...)
+
+	return slices.Index(values, "-") == -1
+}

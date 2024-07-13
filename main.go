@@ -3,7 +3,6 @@ package main
 import (
 	"tic-tac-toe/cmd/board"
 	"tic-tac-toe/cmd/player"
-	"tic-tac-toe/cmd/ui"
 
 	"github.com/eiannone/keyboard"
 )
@@ -14,13 +13,16 @@ func main() {
 
 	b := board.Board{}
 	b.Init()
+
 	b.RenderPreValues()
-	ui.NotifySituation(pc.CurrentPlayer)
+
+	player.NotifyRules(pc.CurrentPlayer)
 
 	keysEvents, err := keyboard.GetKeys(10)
 	if err != nil {
 		panic(err)
 	}
+
 	defer func() {
 		_ = keyboard.Close()
 	}()
@@ -57,7 +59,12 @@ func main() {
 			b.Render(pc.CurrentPlayer)
 
 			if b.CheckHasWinner() {
-				ui.GreenPrintf("\nWinner: %s\n", pc.CurrentPlayer)
+				player.NotifyWinner(pc.CurrentPlayer)
+				break
+			}
+
+			if b.CheckIfDraw() {
+				player.NotifyDraw()
 				break
 			}
 
@@ -65,7 +72,7 @@ func main() {
 			b.SetPattern(pc.Players[pc.CurrentPlayer].Pattern)
 		}
 
-		ui.NotifySituation(pc.CurrentPlayer)
+		player.NotifyRules(pc.CurrentPlayer)
 
 		if event.Key == keyboard.KeyCtrlC || event.Key == keyboard.KeyEsc {
 			break

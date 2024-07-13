@@ -1,5 +1,10 @@
 package player
 
+import (
+	"fmt"
+	"tic-tac-toe/cmd/ui"
+)
+
 const (
 	PLAYER1 = "player1"
 	PLAYER2 = "player2"
@@ -33,4 +38,22 @@ func (c *PlayerController) Switch() {
 	} else {
 		c.CurrentPlayer = PLAYER1
 	}
+}
+
+func NotifyRules(currentPlayer string) {
+	if currentPlayer == PLAYER1 {
+		ui.BluePrintf("\nNow %s's turn!", currentPlayer)
+	} else {
+		ui.RedPrintf("\nNow %s's turn!", currentPlayer)
+	}
+
+	fmt.Print("\n\n# Press Space to flip.\n# Press Ctrl+C or ESC to quit.")
+}
+
+func NotifyWinner(currentPlayer string) {
+	ui.GreenPrintf("\nWinner: %s\n", currentPlayer)
+}
+
+func NotifyDraw() {
+	ui.GreenPrintf("\nDraw:)\n")
 }
