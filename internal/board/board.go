@@ -3,7 +3,7 @@ package board
 import (
 	"fmt"
 	"slices"
-	"tic-tac-toe/cmd/ui"
+	"tic-tac-toe/internal/ui"
 )
 
 type Board struct {

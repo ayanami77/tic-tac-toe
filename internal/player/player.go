@@ -2,7 +2,7 @@ package player
 
 import (
 	"fmt"
-	"tic-tac-toe/cmd/ui"
+	"tic-tac-toe/internal/ui"
 )
 
 const (

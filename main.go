@@ -1,8 +1,8 @@
 package main
 
 import (
-	"tic-tac-toe/cmd/board"
-	"tic-tac-toe/cmd/player"
+	"tic-tac-toe/internal/board"
+	"tic-tac-toe/internal/player"
 
 	"github.com/eiannone/keyboard"
 )
