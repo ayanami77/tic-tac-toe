@@ -16,7 +16,7 @@ func main() {
 
 	b.RenderPreValues()
 
-	player.NotifyRules(pc.CurrentPlayer)
+	pc.NotifyRules()
 
 	keysEvents, err := keyboard.GetKeys(10)
 	if err != nil {
@@ -59,12 +59,12 @@ func main() {
 			b.Render(pc.CurrentPlayer)
 
 			if b.CheckHasWinner() {
-				player.NotifyWinner(pc.CurrentPlayer)
+				pc.NotifyWinner()
 				break
 			}
 
 			if b.CheckIfDraw() {
-				player.NotifyDraw()
+				pc.NotifyDraw()
 				break
 			}
 
@@ -72,10 +72,10 @@ func main() {
 			b.SetPattern(pc.Players[pc.CurrentPlayer].Pattern)
 		}
 
-		player.NotifyRules(pc.CurrentPlayer)
-
 		if event.Key == keyboard.KeyCtrlC || event.Key == keyboard.KeyEsc {
 			break
 		}
+
+		pc.NotifyRules()
 	}
 }

@@ -40,20 +40,20 @@ func (c *PlayerController) Switch() {
 	}
 }
 
-func NotifyRules(currentPlayer string) {
-	if currentPlayer == PLAYER1 {
-		ui.BluePrintf("\nNow %s's turn!", currentPlayer)
+func (c *PlayerController) NotifyRules() {
+	if c.CurrentPlayer == PLAYER1 {
+		ui.BluePrintf("\nNow %s's turn!", c.CurrentPlayer)
 	} else {
-		ui.RedPrintf("\nNow %s's turn!", currentPlayer)
+		ui.RedPrintf("\nNow %s's turn!", c.CurrentPlayer)
 	}
 
-	fmt.Print("\n\n# Press Space to flip.\n# Press Ctrl+C or ESC to quit.")
+	fmt.Print("\n\n# Press Arrow keys to move.\n# Press Space to flip.\n# Press Ctrl+C or ESC to quit.")
 }
 
-func NotifyWinner(currentPlayer string) {
-	ui.GreenPrintf("\nWinner: %s\n", currentPlayer)
+func (c *PlayerController) NotifyWinner() {
+	ui.GreenPrintf("\nWinner: %s\n", c.CurrentPlayer)
 }
 
-func NotifyDraw() {
+func (c *PlayerController) NotifyDraw() {
 	ui.GreenPrintf("\nDraw:)\n")
 }
