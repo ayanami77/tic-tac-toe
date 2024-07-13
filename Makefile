@@ -5,6 +5,9 @@ build:
 		@go build -o bin/$(PROJECT_NAME) ./main.go
 		@echo "Build successful!"
 
+run:
+		go run main.go
+
 test:
 		@echo "Running tests..."
 		@go test -v ./...
