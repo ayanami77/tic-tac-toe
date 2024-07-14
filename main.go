@@ -34,29 +34,32 @@ func main() {
 		}
 
 		if event.Key == keyboard.KeyArrowRight {
-			b.Manipulate("right")
+			b.ControlPosition("right")
+			b.MakePreValues()
 			b.RenderPreValues()
 		}
 
 		if event.Key == keyboard.KeyArrowLeft {
-			b.Manipulate("left")
+			b.ControlPosition("left")
+			b.MakePreValues()
 			b.RenderPreValues()
 		}
 
 		if event.Key == keyboard.KeyArrowUp {
-			b.Manipulate("up")
+			b.ControlPosition("up")
+			b.MakePreValues()
 			b.RenderPreValues()
 		}
 
 		if event.Key == keyboard.KeyArrowDown {
-			b.Manipulate("down")
+			b.ControlPosition("down")
+			b.MakePreValues()
 			b.RenderPreValues()
 		}
 
 		if event.Key == keyboard.KeySpace && !b.CheckIsFlipped() {
-			b.Flip(b.CurrentPattern)
-
-			b.Render(pc.CurrentPlayer)
+			b.Flip()
+			b.Render()
 
 			if b.CheckHasWinner() {
 				pc.NotifyWinner()

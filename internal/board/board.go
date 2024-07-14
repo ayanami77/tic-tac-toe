@@ -23,17 +23,11 @@ func (b *Board) Init() {
 		{"-", "-", "-"},
 		{"-", "-", "-"},
 	}
-	b.PreValues = b.makePreValues(b.Values)
+	b.PreValues = makePreValuesHelper(b.Values)
 	b.PreValues[0][0] = "@"
 }
 
-func (b *Board) Manipulate(direction string) {
-	b.controlPosition(direction)
-
-	b.setPreValues()
-}
-
-func (b *Board) controlPosition(direction string) {
+func (b *Board) ControlPosition(direction string) {
 	const (
 		leftEdge  = 0
 		rightEdge = 2
@@ -59,8 +53,8 @@ func (b *Board) SetPattern(pattern string) {
 	b.CurrentPattern = pattern
 }
 
-func (b *Board) setPreValues() {
-	preValues := b.makePreValues(b.Values)
+func (b *Board) MakePreValues() {
+	preValues := makePreValuesHelper(b.Values)
 
 	if preValues[b.CurrentY][b.CurrentX] == "-" {
 		preValues[b.CurrentY][b.CurrentX] = "@"
@@ -69,7 +63,7 @@ func (b *Board) setPreValues() {
 	b.PreValues = preValues
 }
 
-func (b *Board) makePreValues(values [][]string) [][]string {
+func makePreValuesHelper(values [][]string) [][]string {
 	preValues := make([][]string, len(values))
 
 	for i := range values {
@@ -83,10 +77,16 @@ func (b *Board) makePreValues(values [][]string) [][]string {
 func (b *Board) RenderPreValues() {
 	ui.Clear()
 
-	b.renderHelper(b.PreValues)
+	renderHelper(b.PreValues, b.CurrentPattern)
 }
 
-func (b *Board) renderHelper(values [][]string) {
+func (b *Board) Render() {
+	ui.Clear()
+
+	renderHelper(b.Values, b.CurrentPattern)
+}
+
+func renderHelper(values [][]string, currentPattern string) {
 	for i := 0; i < len(values); i++ {
 		for _, v := range values[i] {
 			if v == "X" {
@@ -94,7 +94,7 @@ func (b *Board) renderHelper(values [][]string) {
 			} else if v == "O" {
 				ui.RedPrintf("%s ", v)
 			} else if v == "@" {
-				if b.CurrentPattern == "X" {
+				if currentPattern == "X" {
 					ui.BluePrintf("- ")
 				} else {
 					ui.RedPrintf("- ")
@@ -108,18 +108,12 @@ func (b *Board) renderHelper(values [][]string) {
 	}
 }
 
+func (b *Board) Flip() {
+	b.Values[b.CurrentY][b.CurrentX] = b.CurrentPattern
+}
+
 func (b *Board) CheckIsFlipped() bool {
 	return b.Values[b.CurrentY][b.CurrentX] != "-"
-}
-
-func (b *Board) Flip(pattern string) {
-	b.Values[b.CurrentY][b.CurrentX] = pattern
-}
-
-func (b *Board) Render(currentPlayer string) {
-	ui.Clear()
-
-	b.renderHelper(b.Values)
 }
 
 func (b *Board) CheckHasWinner() bool {
