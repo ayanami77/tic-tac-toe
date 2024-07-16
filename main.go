@@ -79,6 +79,12 @@ func main() {
 			break
 		}
 
-		pc.NotifyRules()
+		if event.Key == keyboard.KeyArrowRight ||
+			event.Key == keyboard.KeyArrowLeft ||
+			event.Key == keyboard.KeyArrowUp ||
+			event.Key == keyboard.KeyArrowDown ||
+			event.Key == keyboard.KeySpace {
+			pc.NotifyRules()
+		}
 	}
 }
