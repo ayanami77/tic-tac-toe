@@ -2,7 +2,7 @@ PROJECT_NAME=tic-tac-toe
 
 build:
 		@echo "Building the project..."
-		@go build -o bin/$(PROJECT_NAME) ./main.go
+		@go build -o ./$(PROJECT_NAME) ./main.go
 		@echo "Build successful!"
 
 run:
